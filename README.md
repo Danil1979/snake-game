@@ -6,7 +6,7 @@
 
 ## With Anaconda
 
-1. Open a terminal at the root directory of this repository.
+1. Open a terminal at the root directory of this repository. 
    
 2. If you have an anaconda environment called `snake-game` and you do not wish to replace it, go to `environment.yml` and change the name of the environment on the first line:
    
