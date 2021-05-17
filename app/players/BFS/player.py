@@ -1,10 +1,8 @@
-import random
-import enum
 import itertools
 
 class Player():
   name = "Breadth-First Search player"
-  group = "Children of Odin"
+  group = "Fancy"
   members = [
     ["Thor", "12834823"],
     ["Loki", "98854678"],
@@ -114,16 +112,20 @@ def bfs(problem, setup):
             # check if a node was expanded or generated previously
             if not (child.state in [e.state for e in explored]) and not (child.state in [f.state for f in frontier]):
                 # goal test
-                for tree in trees:
-                    if tree.node.id is child.id:
-                        tree.removed = False
-                        tree.expansionsequence = next(expansionSequenceIterator)
-                        break
                 if child.state == problem["food_locations"][0]:
                     found_goal = True
 
                     goalie = child
                 frontier.append(child)
+                for tree in trees:
+                    if tree.node.id is child.id:
+                        tree.removed = False
+                        break
+                    
+                for tree in trees:
+                    if tree.node.id is frontier[0].id and tree.expansionsequence is -1:
+                        tree.expansionsequence = next(expansionSequenceIterator)
+                        break
         print("Explored:", [e.state for e in explored])
         print("Frontier:", [f.state for f in frontier])
         print("Children:", [c.state for c in children])
