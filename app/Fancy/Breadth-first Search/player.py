@@ -4,9 +4,10 @@ class Player():
   name = "Breadth-First Search player"
   group = "Fancy"
   members = [
-    ["Thor", "12834823"],
-    ["Loki", "98854678"],
-    ["Hela", "87654654"]
+    ["Tan Wyyee", "17013673"],
+    ["Kok Ming Ho", "19024272"],
+    ["Sin Jun", "18087619"],
+    ["Leong Yen Loong", "18076083"]
   ]
   informed = False
 
@@ -129,13 +130,10 @@ def bfs(problem, setup):
         print("Explored:", [e.state for e in explored])
         print("Frontier:", [f.state for f in frontier])
         print("Children:", [c.state for c in children])
-        print("Trees:", [t.node.id for t in trees])
         print("")
-        
         solution = [goalie.action]
         path = [goalie.state]
-        while goalie.parent is not None:
-            
+        while goalie.parent is not None:    
             solution.insert(0, goalie.parent.action)
             path.insert(0,goalie.parent.state)
             for e in explored:
@@ -153,14 +151,14 @@ def expandAndReturnChildren(maze, node, idIterator):
     children = []
     expand = [-1,1]
     for x in expand:
-        if node.state[0]+x <= maze[0] and node.state[0]+x >= 0 and node.state[1] <= maze[1] and node.state[1] >= 0:
+        if node.state[0]+x < maze[0] and node.state[0]+x >= 0 and node.state[1] < maze[1] and node.state[1] >= 0:
             if x == -1:
                 direction = "w"
             elif x == 1:
                 direction = "e"
             children.append(Node([node.state[0]+x,node.state[1]],node, direction, next(idIterator)))
     for y in expand:
-        if node.state[0] <= maze[0] and node.state[0] >= 0 and node.state[1]+y <= maze[1] and node.state[1]+y >= 0:
+        if node.state[0] < maze[0] and node.state[0] >= 0 and node.state[1]+y < maze[1] and node.state[1]+y >= 0:
             if y == -1:
                 direction = "n"
             elif y == 1:

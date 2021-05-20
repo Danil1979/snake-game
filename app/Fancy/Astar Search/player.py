@@ -4,9 +4,10 @@ class Player():
   name = "A* Search player"
   group = "Children of Odin"
   members = [
-    ["Thor", "12834823"],
-    ["Loki", "98854678"],
-    ["Hela", "87654654"]
+    ["Tan Wyyee", "17013673"],
+    ["Kok Ming Ho", "19024272"],
+    ["Sin Jun", "18087619"],
+    ["Leong Yen Loong", "18076083"]
   ]
   informed = True
 
@@ -29,7 +30,7 @@ class Player():
     # it randomly generates solution that is invalid
     # its purpose is to show you how this class will work
     # not a guide to how to write your algorithm
-    solution, search_tree = bfs(problem, self.setup)
+    solution, search_tree = astar(problem, self.setup)
     # solution = [random.choice(directions) for step in range(random.randint(1,10))]
     # the following search tree is a static search tree 
     # to show you the format of the variable 
@@ -86,7 +87,7 @@ class Node:
     def addChildren(self, children):
         self.children.extend(children)
     
-def bfs(problem, setup):
+def astar(problem, setup):
      print("this is A* search.")
      idIterator = itertools.count(1)
      expansionSequenceIterator = itertools.count(1)
@@ -96,7 +97,8 @@ def bfs(problem, setup):
      found_goal = False
      goalie = Node()
      solution = []
-     frontier.append(Node(problem["snake_locations"][0], None, None, next(idIterator), 0, returnManhanttanDistance(problem["snake_locations"][0], problem["food_locations"][0])))
+     frontier.append(Node(problem["snake_locations"][0], None, None, next(idIterator), 0, 
+                          returnManhanttanDistance(problem["snake_locations"][0], problem["food_locations"][0])))
      trees.append(searchTree(frontier[0],-1, False))
      for x in problem["snake_locations"]:     
          explored.append(Node(x, None))
@@ -121,27 +123,21 @@ def bfs(problem, setup):
                 # goal test
                 if child.state == problem["food_locations"][0]:
                     found_goal = True
-
                     goalie = child
-
                 frontier = appendAndSort(frontier, child)
                 for tree in trees:
                     if tree.node.id is child.id:
                         tree.removed = False
                         break
-                    
-
                 #frontier.append(child)
         print("Explored:", [e.state for e in explored])
         print("Frontier:", [f.state for f in frontier])
         print("Children:", [c.state for c in children])
         print("Trees:", [t.node.id for t in trees])
         print("")
-        
         solution = [goalie.action]
         path = [goalie.state]
         while goalie.parent is not None:
-            
             solution.insert(0, goalie.parent.action)
             path.insert(0,goalie.parent.state)
             for e in explored:
@@ -165,7 +161,8 @@ def expandAndReturnChildren(maze, node, idIterator,problem):
             elif x == 1:
                 direction = "e"
             children.append(Node([node.state[0]+x,node.state[1]],node, direction, next(idIterator),
-                                 returnManhanttanDistance(problem["snake_locations"][0], [node.state[0]+x,node.state[1]]), returnManhanttanDistance([node.state[0]+x,node.state[1]], problem["food_locations"][0])))
+                                 returnManhanttanDistance(problem["snake_locations"][0], [node.state[0]+x,node.state[1]]), 
+                                 returnManhanttanDistance([node.state[0]+x,node.state[1]], problem["food_locations"][0])))
     for y in expand:
         if node.state[0] <= maze[0] and node.state[0] >= 0 and node.state[1]+y <= maze[1] and node.state[1]+y >= 0:
             if y == -1:
@@ -173,7 +170,8 @@ def expandAndReturnChildren(maze, node, idIterator,problem):
             elif y == 1:
                 direction = "s"
             children.append(Node([node.state[0],node.state[1]+y],node, direction, next(idIterator),
-                                  returnManhanttanDistance(problem["snake_locations"][0], [node.state[0],node.state[1]+y]), returnManhanttanDistance([node.state[0],node.state[1]+y], problem["food_locations"][0])))
+                                  returnManhanttanDistance(problem["snake_locations"][0], [node.state[0],node.state[1]+y]), 
+                                  returnManhanttanDistance([node.state[0],node.state[1]+y], problem["food_locations"][0])))
     print("return child")
     return children
 def returnManhanttanDistance(fromNode, toNode):
@@ -202,7 +200,7 @@ def appendAndSort(frontier, node):
 
 if __name__ == "__main__":
   p1 = Player({ "maze_size": [10,10], "static_snake_length": True })
-  sol, st = p1.run({'snake_locations': [[0, 5]], 'current_direction': 'e', 'food_locations': [[4, 9]]})
+  sol, st = p1.run({'snake_locations': [[2,5],[3,5],[4,5],[5,5],[6,5],[7,5],[8,5],[8,6],[8,7],[8,8],[7,8],[6,8],[5,8],[4,8],[3,8],[2,8],[1,8]], 'current_direction': 'e', 'food_locations': [[9, 9]]})
   print("Solution is:", sol)
   print("Search tree is:")
   print(st)
